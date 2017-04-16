@@ -21,3 +21,5 @@ Handler for restart / reloading the services
 Add variables as toggle switches for usage of:
 	-Encryption
 	-VPN
+	-Scripts like https://gist.github.com/dlangille/dac3b6d138bb12874f9a 
+		or the database dumps
