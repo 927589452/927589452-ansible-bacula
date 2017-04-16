@@ -1,0 +1,24 @@
+---
+- include: "{{ item }}"
+  become: yes
+  with_first_found:
+    - files:
+      - "{{ role_path }}/tasks/install-{{ ansible_distribution }}.yml"
+      - "{{ role_path }}/tasks/install-{{ ansible_os_family }}.yml"
+      - "{{ role_path }}/tasks/install-default.yml"
+  tags:
+    - installation
+
+- debug:
+    var: bacula_director
+
+- include: "{{ role_path }}/tasks/configure.yml"
+  become: yes
+  tags:
+    - installation
+    - configuration
+
+    
+- debug:
+    msg: "Please manually copy the client cert to {{ config_path }}/bacula/client_{{ inventory_hostname }}.pem"
+    

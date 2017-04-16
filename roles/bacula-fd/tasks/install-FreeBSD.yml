@@ -1,0 +1,10 @@
+# this should possibly be moved to the jailhost for later iterations
+- name: install bacula client 
+  pkgng:
+    name: "{{ pkg }}"
+    cached: no
+    with_items: 
+      - bacula-client
+    loop_control:
+      loop_var: pkg
+

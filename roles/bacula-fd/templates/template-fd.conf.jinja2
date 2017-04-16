@@ -1,0 +1,29 @@
+# {{ ansible_managed }}
+Director {
+  Name = {{ bacula_director }}-dir
+  Password = "{{ lookup('password','/etc/ansible/credentials/' + inventory_hostname + '-' + bacula_director + '/fdpassword length=32') }}"
+}
+FileDaemon {
+  Name = {{ inventory_hostname }}-fd
+  WorkingDirectory = {{ bacula_workdir }}
+  Pid Directory = {{ bacula_piddir }}
+  Maximum Concurrent Jobs = 20
+#  FDAddress = {{ inventory_hostname }}
+  FDAddress = 0.0.0.0
+  FDport = 9102
+
+  PKI Signatures = Yes
+  PKI Encryption = Yes
+  PKI Keypair = "/etc/bacula/client_{{ inventory_hostname }}.pem"
+  PKI Master Key = "/etc/bacula/master.cert"
+
+  Heartbeat Interval = 30 sec
+}
+Messages {
+  Name = Standard
+  director = {{ bacula_director }}-dir = all, !skipped, !restored
+}
+
+
+
+

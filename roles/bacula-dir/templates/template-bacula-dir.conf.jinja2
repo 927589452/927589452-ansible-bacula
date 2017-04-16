@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+@|" /bin/sh -c 'cat {{ config_path }}/bacula/dir-*.conf'"
+@|" /bin/sh -c 'cat {{ config_path }}/bacula/schedule-*.conf'"
+@|" /bin/sh -c 'cat {{ config_path }}/bacula/job_*.conf'"
+@|" /bin/sh -c 'cat {{ config_path }}/bacula/pool-*.conf'"
+@|" /bin/sh -c 'cat {{ config_path }}/bacula/client-*.conf'"
+@|" /bin/sh -c 'cat {{ config_path }}/bacula/job-*.conf'"
+@|" /bin/sh -c 'cat {{ config_path }}/bacula/fileset-*.conf'"
+@|" /bin/sh -c 'cat {{ config_path }}/bacula/storage-*.conf'"
+
+

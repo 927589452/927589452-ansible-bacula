@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+Client {
+  Name           = {{ inventory_hostname }}-fd
+  Password = "{{ lookup('password','/etc/ansible/credentials/' + inventory_hostname  + '-' +  bacula_director  + '/fdpassword length=32') }}"
+  Address        = {{ inventory_hostname }}
+  Catalog        = {{ bacula_catalog }}
+}
+
+

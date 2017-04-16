@@ -1,0 +1,18 @@
+# this should possibly be moved to the jailhost for later iterations
+- name: install postgres and dependancies
+  pkgng:
+    name: "{{ pkg }}"
+    cached: no
+  with_items: 
+    - postgresql93-client
+    - postgresql93-server
+    - py27-psycopg2 # needed for ansible managment
+    - bacula-server # this should be removed when i get on how to define the database scheme
+  tags:
+    - installation
+    - database
+    - bacula-catalog
+  loop_control:
+    loop_var: pkg
+    
+

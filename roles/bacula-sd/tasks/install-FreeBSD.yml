@@ -1,0 +1,12 @@
+# this should possibly be moved to the jailhost for later iterations
+- name: install bacula server for bacula-sd
+  pkgng:
+    name: "{{ pkg }}"
+    cached: no
+  with_items: 
+    - bacula-server
+  tags:
+    - bacula-sd
+    - installation 
+  loop_control:
+    loop_var: pkg

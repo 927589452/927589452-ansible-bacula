@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+Director {
+  Name             = {{ bacula_director }}-dir
+  Password = {{ lookup('password','/etc/ansible/credentials/' + bacula_director + '/dirpassword length=32') }}
+  QueryFile        = "/usr/local/share/bacula/query.sql"
+  PidDirectory     = {{ bacula_piddir }}
+  WorkingDirectory = {{ bacula_workdir }}
+  Messages         = {{ bacula_messages }}
+  Heartbeat Interval = 30 sec
+}
+

@@ -1,0 +1,4 @@
+- name: install bacula-fd
+  apt:
+    pkg: bacula-fd
+  

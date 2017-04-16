@@ -1,0 +1,18 @@
+# this should possibly be moved to the jailhost for later iterations
+- name: install postgres
+  pkgng:
+    name: "{{ item }}"
+    cached: no
+    with_items: 
+      - postgresql-client
+      - postgresql
+      - python-psycopg2
+
+- name: install bacula director
+  pkgng:
+    name: "{{ item }}"
+    cached: no
+    with_items: 
+      - bacula-director
+    
+

@@ -1,0 +1,9 @@
+---
+- postgresql_user:
+    db: "{{ hostvars[inventory_hostname]['bacula_database_name'] }}"
+    login_user: "{{ hostvars[inventory_hostname]['postgresql_user'] }}"
+    name: "{{ hostvars[inventory_hostname]['bacula_database_user'] }}"
+    password: "{{ lookup('password','/etc/ansible/credentials/' +  bacula_catalog  + '-' +  bacula_director  + '/dbpassword length=32') }}"
+  become: true
+  become_user: pgsql
+

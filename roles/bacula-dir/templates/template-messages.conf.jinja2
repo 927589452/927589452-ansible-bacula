@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+Messages {
+  Name            = {{ bacula_messages }}
+  mailcommand     = "/usr/local/sbin/bsmtp -h {{ smtpserver }}:{{ smtpport }} -f \"\(Bacula\) %r\" -s \"Bacula: %t %e of %c %l\" %r"
+  operatorcommand = "/usr/local/sbin/bsmtp -h {{ smtpserver }}:{{ smtpport }} -f \"\(Bacula\) %r\" -s \"Bacula: Intervention needed for %j\" %r"
+ 
+  operator = {{ systemaddress }} = mount
+  mail     = {{ monitoraddress }} = all
+  console  = all
+  append   = "/var/log/bacula.log" = all, !skipped, !restored
+  catalog  = all, !skipped, !saved
+}
+

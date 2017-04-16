@@ -1,0 +1,5 @@
+---
+database_name: bacula
+database_user: bacula
+database_ip: "hostvars['database']['ansible_default_ipv4']"
+

@@ -1,0 +1,14 @@
+---
+- file:
+    path: "{{ backup_dir }}/{{ dir }}"
+    state: directory
+    mode: 755
+    owner: bacula
+    group: bacula
+  with_items:
+    - "{{ bacula_device }}"
+  loop_control:
+    loop_var: dir
+  tags:
+    - installation
+    - bacula-sd

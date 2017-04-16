@@ -1,0 +1,23 @@
+# {{ ansible_managed }}
+FileSet {
+  Name = "{{ inventory_hostname }}-set"
+  Include {
+    Options {
+      signature = SHA1
+      noatime = yes
+      wildfile = "*.iso"
+      Exclude = yes
+     }
+    {% for item in client_include_dirs %}
+    File = {{ item }}
+    {% endfor %}
+    }
+    # Add paths to backup
+  {% if client_exclude_dirs %}
+  Exclude {
+    {% for item in client_exclude_dirs %}
+    File = {{ item }}
+    {% endfor %}
+  }
+  {% endif %}
+}

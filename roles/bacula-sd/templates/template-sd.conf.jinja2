@@ -1,0 +1,45 @@
+# {{ ansible_managed }}
+Storage {  
+  Name = "{{ ansible_host }}-sd"
+  SDPort = {{ bacula_sdport }}  
+  Working Directory = {{ bacula_workdir }}
+  Pid Directory = {{ bacula_piddir }}   
+  Maximum Concurrent Jobs = {{ bacula_concurrent_jobs }}
+  Heartbeat Interval = 30 sec
+}     
+Director {             
+  Name = "{{ bacula_director }}-dir"    
+  Password = "sqVt305tqAQ77qGC2YAnKoxp7wgi9oGph3HZ79PZu6HzktvNeg5YO-1Kp6c1w5Ym"   
+  Monitor  = No                 
+}
+{% for device in bacula_device %} 
+Device {                         
+  Name = {{ device }}           
+  Media Type = File            
+  Archive Device = {{ backup_dir }}/{{ device }}
+  Label Media = Yes           
+  Random Access = Yes        
+  Automatic Mount =  Yes    
+  Removable Media = No     
+  Always Open = No        
+}                           
+{% endfor %}    
+
+# a test device
+Device {
+  Name = NULL
+  Media Type = NULL
+  Device Type = Fifo
+  Archive Device = /dev/null
+  LabelMedia = yes
+  Random Access = no
+  AutomaticMount = no
+  RemovableMedia = no
+  MaximumOpenWait = 60
+  AlwaysOpen = no
+}
+                                                                 
+Messages {                                      
+  Name = Standard                              
+  director = {{ bacula_director }}-dir = all 
+} 

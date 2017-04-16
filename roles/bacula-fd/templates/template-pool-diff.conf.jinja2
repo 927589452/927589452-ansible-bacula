@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+Pool {
+  Name = {{ inventory_hostname }}-diff
+  Label Format = {{ inventory_hostname }}-diff
+  @{{ hostvars[bacula_director]['config_path'] }}/bacula/pool_defaults.conf
+  @{{ hostvars[bacula_director]['config_path'] }}/bacula/pool_diff_defaults.conf
+}

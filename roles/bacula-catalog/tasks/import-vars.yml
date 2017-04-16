@@ -1,0 +1,8 @@
+---
+- include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+      - "{{ role_dir }}/vars/{{ ansible_distribution }}.yml"
+      - "{{ role_dir }}/vars/{{ ansible_os_family }}.yml"
+      - "{{ role_dir }}/vars/default.yml"
+    - skip: true

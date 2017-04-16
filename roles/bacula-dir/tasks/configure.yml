@@ -1,0 +1,72 @@
+#- name: stop bacula director 
+#  service:
+  #    name: bacula-director
+  #  state: stopped
+- name: make sure bacula group exists
+  group:
+    name: bacula
+    state: present  
+  
+- name: make sure bacula user exists
+  user:
+    name: bacula
+    group: bacula
+    comment: "User for bacula backup system"
+
+- name: generate config directory
+  file: 
+    path: '{{ config_path }}/bacula'
+    state: directory
+    mode: 0755
+    owner: bacula
+    group: bacula
+    
+- name: generate config directory
+  file: 
+    path: '{{ bacula_bootstrap_dir }}'
+    state: directory
+    mode: 0755
+    owner: bacula
+    group: bacula
+
+- name: copy configurations
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    backup: yes
+    owner: bacula
+    group: bacula
+    mode: 0600
+  with_items:
+    - src: '{{ role_path }}/templates/template-self.conf.jinja2'
+      dest: '{{ config_path }}/bacula/dir-self.conf'
+    - src: '{{ role_path }}/templates/template-messages.conf.jinja2'
+      dest: '{{ config_path }}/bacula/dir-messages.conf'
+    - src: '{{ role_path }}/templates/template-bacula-dir.conf.jinja2'
+      dest: '{{ config_path }}/bacula/bacula-dir.conf'
+    - src: '{{ role_path }}/templates/template-schedule-backupcycle.conf.jinja2'
+      dest: '{{ config_path }}/bacula/schedule-backupcycle.conf'
+    - src: '{{ role_path }}/templates/template-job_defaultjob.conf.jinja2'
+      dest: '{{ config_path }}/bacula/job_defaultjob.conf'
+
+- name: copy defaults
+  copy:
+    backup: yes
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: bacula
+    group: bacula
+    mode: 0600
+  with_items:
+    - src: '{{ role_path }}/files/pool_defaults.conf'
+      dest: '{{ config_path }}/bacula/'
+    - src: '{{ role_path }}/files/pool_diff_defaults.conf'
+      dest: '{{ config_path }}/bacula/'
+    - src: '{{ role_path }}/files/pool_inc_defaults.conf'
+      dest: '{{ config_path }}/bacula/'
+    - src: '{{ role_path }}/files/pool_full_defaults.conf'
+      dest: '{{ config_path }}/bacula/'
+
+
+
+

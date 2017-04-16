@@ -1,0 +1,12 @@
+- name: install bacula director
+  apt:
+    pkg: "{{ pkg }}"
+    update_cache: yes
+    cache_valid_time: 180
+  with_items: 
+    - bacula-console
+  loop_control:
+    loop_var: pkg    
+  tags:
+    - installation
+    - bacula-console

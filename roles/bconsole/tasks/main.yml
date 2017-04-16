@@ -1,0 +1,25 @@
+---
+- debug:
+    var: bacula_director
+    verbosity: 1
+
+- debug:
+    var: hostvars[bacula_director].inventory_hostname
+    verbosity: 1
+
+- include: "{{ item }}"
+  become: yes
+  with_first_found:
+    - files:
+      - "{{ role_path }}/tasks/install-{{ ansible_distribution }}.yml"
+      - "{{ role_path }}/tasks/install-{{ ansible_os_family }}.yml"
+      - "{{ role_path }}/tasks/install-default.yml"
+  tags:
+    - installation
+
+- include: "{{ role_path }}/tasks/configure.yml"
+  become: yes
+  tags:
+    - installation
+    - configuration
+    

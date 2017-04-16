@@ -1,0 +1,46 @@
+---
+- debug:
+    var: bacula_sdport
+    verbosity: 1
+    
+- debug:
+    var: bacula_devices
+    verbosity: 1
+      
+- debug:
+    var: bacula_director
+    verbosity: 1
+      
+- debug:
+    var: hostvars[bacula_director].inventory_hostname
+    verbosity: 1
+  
+- debug:
+    var: hostvars[bacula_director].config_path
+    verbosity: 1
+
+
+- include: "{{ item }}"
+  become: yes
+  with_first_found:
+    - files:
+      - "{{ role_path }}/tasks/install-{{ ansible_distribution }}.yml"
+      - "{{ role_path }}/tasks/install-{{ ansible_os_family }}.yml"
+      - "{{ role_path }}/tasks/install-default.yml"
+  tags:
+    - bacula-sd
+    - installation
+    
+- include: "{{ role_path }}/tasks/make-device-dir.yml"
+  become: yes
+  tags:
+    - installation
+    - configuration
+    - bacula-sd
+
+- include: "{{ role_path }}/tasks/configure.yml"
+  become: yes
+  tags:
+    - installation
+    - configuration
+    - bacula-sd

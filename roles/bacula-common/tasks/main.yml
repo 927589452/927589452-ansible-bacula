@@ -1,0 +1,24 @@
+---
+- include: "{{ role_path }}/tasks/create-groups.yml"
+  become: yes
+  tags:
+    - installation
+    - configuration
+
+- include: "{{ role_path }}/tasks/create-users.yml"
+  become: yes 
+  tags:
+    - installation
+    - configuration
+
+- include: "{{ role_path }}/tasks/create-directories.yml"
+  become: yes
+  tags:
+    - installation
+    - configuration
+  
+- include: "{{ role_path }}/tasks/copy-mastercert.yml"
+  become: yes
+  tags:
+    - installation
+    - configuration

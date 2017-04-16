@@ -1,0 +1,7 @@
+---
+bacula_device:
+  - FileHP1
+  - FileHP2
+  - FileHP3
+bacula_sdport: 9103
+

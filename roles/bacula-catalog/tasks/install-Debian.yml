@@ -1,0 +1,19 @@
+- name: install postgres
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    cache_valid_time: 180
+    with_items: 
+      - postgresql-client
+      - postgresql
+      - python-psycopg2
+
+- name: install bacula director
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    cache_valid_time: 180
+    with_items: 
+      - bacula-director-pqsql
+    
+

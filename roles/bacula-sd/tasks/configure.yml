@@ -1,0 +1,35 @@
+#- name: stop bacula director 
+#  service:
+  #    name: bacula-director
+  #  state: stopped
+  
+- name: copy configurations to client
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    backup: yes
+    owner: root
+    group: wheel
+    mode: 0600
+  with_items:
+    - src: "{{ role_path }}/templates/template-sd.conf.jinja2"
+      dest: "{{ config_path }}/bacula/bacula-sd.conf"
+  tags: configuration
+
+- debug:
+    var: hostvars[bacula_director].config_path
+    verbosity: 1
+
+- name: copy configurations to director
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    backup: yes
+    owner: bacula
+    group: bacula
+    mode: 0600
+  delegate_to: "{{ bacula_director }}"
+  with_items:
+    - src: "{{ role_path }}/templates/template-storage.conf.jinja2"
+      dest: "{{ hostvars[bacula_director].config_path }}/bacula/storage-{{ inventory_hostname }}.conf"
+  tags: configuration

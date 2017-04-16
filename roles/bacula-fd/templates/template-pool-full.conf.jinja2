@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+Pool{
+  Name = {{ inventory_hostname }}-full
+  Label Format = {{ inventory_hostname }}-full
+  @{{ hostvars[bacula_director]['config_path'] }}/bacula/pool_defaults.conf
+  @{{ hostvars[bacula_director]['config_path'] }}/bacula/pool_full_defaults.conf
+}

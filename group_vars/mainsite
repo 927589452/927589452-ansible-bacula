@@ -1,0 +1,10 @@
+---
+bacula_storage: sd-1
+bacula_director: dir-1
+bacula_catalog: Catalog
+bacula_messages: messages
+bacula_sd: sd-1
+
+smtpport: 25
+smtpserver: mail.server
+

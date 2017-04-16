@@ -1,0 +1,17 @@
+---
+- debug:
+    msg: "{{ item }}"
+    verbosity: 1
+  with_items:
+    - '{{ bacula_workdir }}'
+    - '{{ config_path }}/bacula'
+
+- file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: bacula
+    group: bacula
+  with_items:
+    - "{{ bacula_workdir }}"
+    - '{{ config_path }}/bacula'

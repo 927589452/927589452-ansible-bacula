@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+Catalog {
+  Name      = {{ bacula_catalog }}
+  dbname    = {{ hostvars[inventory_hostname]['bacula_database_name'] }}
+  dbaddress = {{ hostvars[inventory_hostname]['inventory_hostname'] }}
+  user      = {{ hostvars[inventory_hostname]['bacula_database_user'] }}
+  password = {{ lookup('password','/etc/ansible/credentials/' +  bacula_catalog  + '-' +  bacula_director  + '/dbpassword length=32') }}
+}
+
+

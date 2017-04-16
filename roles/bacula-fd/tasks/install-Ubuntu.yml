@@ -1,0 +1,9 @@
+---
+- apt:
+    name: bacula-fd
+    update_cache: yes
+    cache_valid_time: 180
+  tags:
+    - bacula-fd
+    - installation
+

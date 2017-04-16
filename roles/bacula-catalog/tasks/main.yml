@@ -1,0 +1,24 @@
+---
+- name: Get the Install tasks for the OS
+  include: "{{ item }}"
+  become: yes
+  with_first_found:
+    - files:
+      - "{{ role_path }}/tasks/install-{{ ansible_distribution }}.yml"
+      - "{{ role_path }}/tasks/install-{{ ansible_os_family }}.yml"
+      - "{{ role_path }}/tasks/install-default.yml"
+  tags:
+    - installation
+
+- name: configure the database 
+  include: "{{ role_path }}/tasks/database.yml"
+  tags:
+    - database
+    - configuration
+
+- include: "{{ role_path }}/tasks/configure.yml"
+  become: yes
+  tags:
+    - installation
+    - configuration
+     

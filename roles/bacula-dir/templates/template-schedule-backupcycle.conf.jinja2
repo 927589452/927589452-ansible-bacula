@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+Schedule {
+  Name = "BackupCycle"
+  Run = Level=Full 1st sun at 4:00
+  Run = Level=Differential 2nd-5th sun at 4:00
+  Run = Level=Incremental mon-sat at 4:00
+}

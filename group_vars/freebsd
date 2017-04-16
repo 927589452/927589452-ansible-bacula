@@ -1,0 +1,8 @@
+---
+config_path: /usr/local/etc
+bacula_workdir: /usr/local/bacula/working
+bacula_piddir: /var/run/
+bacula_bootstrap_dir: /var/lib/bacula
+ansible_ssh_user: root
+ansible_python_interpreter: /usr/local/bin/python2
+

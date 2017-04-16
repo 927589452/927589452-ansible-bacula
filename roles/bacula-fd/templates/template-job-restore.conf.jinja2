@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+Job {
+  Name = "restore-{{ inventory_hostname }}"
+  Messages = "{{ bacula_messages }}"
+  Type = Restore
+  Client = "{{ inventory_hostname }}-fd"
+  Storage = "{{ bacula_sd }}-sd"
+  Level = Incremental
+  Pool = Default
+  FileSet = "{{ inventory_hostname }}-set"
+  Where = /tmp/bacula-restores
+} 
+

@@ -1,0 +1,18 @@
+---
+- include: "{{ item }}"
+  become: yes
+  with_first_found:
+    - files:
+      - "{{ role_path }}/tasks/install-{{ ansible_distribution }}.yml"
+      - "{{ role_path }}/tasks/install-{{ ansible_os_family }}.yml"
+      - "{{ role_path }}/tasks/install-default.yml"
+    - skip: true
+  tags:
+    - installation
+
+- include: "{{ role_path }}/tasks/configure.yml"
+  become: yes
+  tags:
+    - installation
+    - configuration
+      

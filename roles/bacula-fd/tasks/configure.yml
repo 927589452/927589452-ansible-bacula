@@ -1,0 +1,63 @@
+#- name: stop bacula director 
+#  service:
+  #    name: bacula-director
+  #  state: stopped
+- debug:
+    msg: "{{ item }} "
+    verbosity: 2
+  with_items:
+    - "{{ inventory_hostname }}"
+    - "{{ ansible_fqdn }}"
+    - "{{ inventory_hostname }}"
+
+- debug:
+    var: client_exclude_dirs
+    verbosity: 2
+  
+- debug:
+    var: client_include_dirs
+    verbosity: 2
+  
+- name: copy configurations to client
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    backup: no
+    owner: root
+    group: wheel
+    mode: 0600
+  with_items:
+    - src: "{{ role_path }}/templates/template-fd.conf.jinja2"
+      dest: "{{ config_path }}/bacula/bacula-fd.conf"
+
+- debug:
+    var: hostvars[bacula_director]['config_path']
+    verbosity: 1
+
+- name: configure {{ bacula_director }}-dir for {{ inventory_host }}-fd
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    backup: no
+    owner: bacula
+    group: bacula
+    mode: 0600
+  delegate_to: "{{ bacula_director }}"
+  tags:  
+    - bacula-director
+  with_items:
+    - src: "{{ role_path }}/templates/template-client.conf.jinja2"
+      dest: "{{ hostvars[bacula_director]['config_path'] }}/bacula/client-{{ inventory_hostname }}.conf"
+    - src: "{{ role_path }}/templates/template-fileset.conf.jinja2"
+      dest: "{{ hostvars[bacula_director]['config_path'] }}/bacula/fileset-{{ inventory_hostname }}.conf"
+    - src: "{{ role_path }}/templates/template-pool-inc.conf.jinja2"
+      dest: "{{ hostvars[bacula_director]['config_path'] }}/bacula/pool-inc-{{ inventory_hostname }}.conf"
+    - src: "{{ role_path }}/templates/template-pool-diff.conf.jinja2"
+      dest: "{{ hostvars[bacula_director]['config_path'] }}/bacula/pool-diff-{{ inventory_hostname }}.conf"
+    - src: "{{ role_path }}/templates/template-pool-full.conf.jinja2"
+      dest: "{{ hostvars[bacula_director]['config_path'] }}/bacula/pool-full-{{ inventory_hostname }}.conf"
+    - src: "{{ role_path }}/templates/template-job-backup.conf.jinja2"
+      dest: "{{ hostvars[bacula_director]['config_path'] }}/bacula/job-backup-{{ inventory_hostname }}.conf"
+    - src: "{{ role_path }}/templates/template-job-restore.conf.jinja2"
+      dest: "{{ hostvars[bacula_director]['config_path'] }}/bacula/job-restore-{{ inventory_hostname }}.conf"
+ 

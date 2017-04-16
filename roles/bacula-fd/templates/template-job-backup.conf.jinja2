@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+Job {
+  Name = "backup-{{ inventory_hostname }}"
+  JobDefs = DefaultJob
+  Client = "{{ inventory_hostname }}-fd"
+  Storage = "{{ bacula_sd }}-sd"
+  Level = Incremental
+  Pool = Default
+  Full Backup Pool = {{ inventory_hostname }}-full
+  Differential Backup Pool = {{ inventory_hostname }}-diff
+  Incremental Backup Pool = {{ inventory_hostname }}-inc
+  FileSet = "{{ inventory_hostname }}-set"
+} 
+

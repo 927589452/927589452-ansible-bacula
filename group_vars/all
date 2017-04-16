@@ -1,0 +1,8 @@
+---
+smtpserver: mail.alioth.uberspace.de
+smtpport: 25
+ansible_ssh_private_key_file: "~/.ssh/ansible_id_rsa"
+systemaddress: "noreply-{{ ansible_nodename }}@927589452.de"
+monitoraddress: "admin-{{ ansible_nodename }}@927589452.de"
+
+

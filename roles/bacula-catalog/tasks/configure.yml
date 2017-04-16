@@ -1,0 +1,36 @@
+#- name: stop bacula director 
+#  service:
+  #    name: bacula-director
+  #  state: stopped
+  
+- name: copy configurations to database
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    backup: yes
+    owner: pgsql
+    group: wheel
+    mode: 0600
+  with_items:
+    - src: '{{ role_path }}/templates/template-pg_hba.conf.jinja2'
+      dest: '/usr/local/pgsql/data/pg_hba.conf'
+      #fix that
+  tags: configuration
+
+- name: copy configurations to director
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    backup: yes
+    owner: bacula
+    group: bacula
+    mode: 0600
+  delegate_to: "{{ bacula_director }}"
+  with_items:
+    - src: '{{ role_path }}/templates/template-catalog.conf.jinja2'
+      dest: '{{ config_path }}/bacula/dir-catalog.conf'
+
+  tags: configuration
+
+
+

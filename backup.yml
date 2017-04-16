@@ -1,0 +1,31 @@
+---
+- hosts: all
+  tasks:
+  - debug:
+    become: yes
+
+- hosts: bacula-sd,bacula-fd,bacula-dir,bconsole
+  roles:
+  - bacula-common
+
+- hosts: bacula-catalog
+  roles:
+  - bacula-catalog
+
+- hosts: bacula-dir
+  roles:
+  - bacula-dir 
+
+- hosts: bacula-sd
+  roles:
+  - bacula-sd
+
+- hosts: bacula-fd
+  roles:
+  - bacula-fd
+
+- hosts: bacula-console
+  roles:
+  - bconsole
+
+

@@ -1,0 +1,24 @@
+#by place
+[dietzenbach]
+# bacula vars are defined on a per location level
+
+#by function
+[bacula:children]
+bacula-dir
+bacula-fd
+bacula-sd
+bacula-catalog
+bacula-console
+bacula-monitor
+
+[bacula-sd]
+
+[bacula-fd]
+
+[bacula-dir]
+
+[bacula-catalog]
+
+[bacula-console]
+
+[bacula-monitor]

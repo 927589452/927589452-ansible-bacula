@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+Storage {
+  Name = "{{ inventory_hostname }}-sd"
+# Do not use "localhost" here
+  Address =  {{ ansible_default_ipv4.address }}           # N.B. Use a fully qualified name here
+  SDPort = {{ bacula_sdport }}
+  Password = "sqVt305tqAQ77qGC2YAnKoxp7wgi9oGph3HZ79PZu6HzktvNeg5YO-1Kp6c1w5Ym"
+{% for device in bacula_device %}  
+  Device = {{ device }}
+{% endfor %}
+# Test Device
+  Device = NULL
+  Media Type = File
+  Maximum Concurrent Jobs = {{ bacula_concurrent_jobs }}        # run up to 10 jobs a the same time
+  Heartbeat Interval = 30 sec
+}
+

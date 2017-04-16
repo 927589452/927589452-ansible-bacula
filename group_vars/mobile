@@ -1,0 +1,4 @@
+---
+  bacula_storage: freenas-hp-sd-1
+  bacula_director: backup
+

@@ -1,0 +1,26 @@
+# {{ ansible_managed }}
+# Job defaults
+JobDefs {
+  Name = "DefaultJob"
+  Type = Backup
+  Messages = {{ bacula_messages }}
+  Priority = 10
+  FileSet = "DefaultSet"
+  Schedule = "BackupCycle"
+  Write Bootstrap = "{{ bacula_bootstrap_dir }}/%c.bsr"
+}
+FileSet {
+  Name = "DefaultSet"
+  Include {
+    Options {
+      signature = SHA1
+      noatime = yes
+    }
+    File = /etc
+  }
+}
+ 
+Pool {
+  Name = Default
+  Pool Type = Backup
+}

@@ -1,0 +1,21 @@
+#- name: stop bacula director 
+#  service:
+  #    name: bacula-director
+  #  state: stopped
+  
+- name: copy configurations to administration pc
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    backup: yes
+    owner: bacula
+    group: bacula
+    mode: 0600
+  with_items:
+    - src: '{{ role_path }}/templates/template-bconsole.conf.jinja2'
+      dest: '{{ config_path }}/bacula/bconsole.conf'
+    - src: '{{ role_path }}/templates/template-bconsole-director.conf.jinja2'
+      dest: '{{ config_path }}/bacula/bconsole-{{ bacula_director }}.conf'
+
+      #fix that
+  tags: configuration

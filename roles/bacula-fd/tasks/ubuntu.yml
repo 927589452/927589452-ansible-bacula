@@ -1,0 +1,35 @@
+- name: install postgres
+  apt:
+    pkg: {{ item }}
+    update_cache: yes
+    cache_valid_time: 180
+    with_items: 
+      - postgresql-client
+      - postgresql
+      - python-psycopg2
+
+- name: install bacula director
+  apt:
+    pkg: {{ item }}
+    update_cache: yes
+    cache_valid_time: 180
+    with_items: 
+      - bacula-director-pqsql
+    
+- name: stop bacula director 
+  service:
+    name: bacula-director
+    state: stopped
+
+- name: copy configurations
+  template: 
+    src: {{ item.src }}
+    dest: {{ item.dest }}
+    backup: yes
+  with_items:
+    - { src: 'templates/template-self.conf.jinja2' , dest: '{{ config_path }}/bacula/dir-self.conf' }
+    - { src: 'templates/template-catalog.conf.jinja2' , dest: '{{ config_path }}/bacula/dir-catalog.conf' }
+    - { src: 'templates/template-messages.conf.jinja2' , dest: '{{ config_path }}/bacula/dir-messages.conf' }
+    - { src: 'templates/template-bacula-dir.conf.jinja2' , dest: '{{ config_path }}/bacula/bacula-dir.conf' }
+
+

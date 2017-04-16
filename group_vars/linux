@@ -1,0 +1,11 @@
+---
+config_path: "/etc"
+client_include_dirs:
+  - /home
+  - /etc
+  - /usr/local/etc
+client_exclude_dirs:
+  - /tmp
+  - /var
+bacula_workdir: /var/bacula/working
+bacula_piddir: /var/run/bacula

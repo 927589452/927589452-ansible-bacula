@@ -1,0 +1,13 @@
+---
+- name: create after run direktory
+  file:
+    path: "/etc/ansible/after_run/"
+    state: directory
+    mode: 0755
+
+- name: create scripts for missing keys
+  template: 
+    src: {{ role_path }}/templates/template-generate-clientkeys.sh.jinja2
+    dest: /etc/ansible/after_run/
+
+

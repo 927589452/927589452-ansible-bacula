@@ -1,0 +1,11 @@
+---
+- name: copy defaults
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: bacula
+    group: bacula
+    mode: 0600
+  with_items:
+    - src: '{{ role_path }}/files/master.cert'
+      dest: '{{ config_path }}/bacula/'
